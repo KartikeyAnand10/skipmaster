@@ -157,7 +157,7 @@ h1 {
 
 .controls {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr auto;
   gap: 12px;
   margin: 20px 0;
 }
@@ -187,6 +187,22 @@ button {
 
 .ghost-button:hover {
   background: var(--paper);
+}
+
+.sound-button {
+  min-width: 128px;
+  padding: 0 16px;
+}
+
+.sound-note {
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-weight: 600;
+}
+
+.sound-note.ready {
+  color: var(--green);
 }
 
 .settings {

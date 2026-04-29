@@ -17,6 +17,8 @@ const els = {
   progressFill: document.querySelector("#progressFill"),
   startPauseButton: document.querySelector("#startPauseButton"),
   resetButton: document.querySelector("#resetButton"),
+  testSoundButton: document.querySelector("#testSoundButton"),
+  soundNote: document.querySelector("#soundNote"),
   statusPill: document.querySelector("#statusPill"),
   skipMinutes: document.querySelector("#skipMinutes"),
   breakSeconds: document.querySelector("#breakSeconds"),
@@ -48,10 +50,11 @@ function formatTime(totalSeconds) {
   return `${minutes}:${seconds}`;
 }
 
-function getAudioContext() {
+async function unlockAudio() {
   const AudioContextConstructor = window.AudioContext || window.webkitAudioContext;
 
   if (!AudioContextConstructor) {
+    els.soundNote.textContent = "Sound is not supported in this browser.";
     return null;
   }
 
@@ -60,15 +63,15 @@ function getAudioContext() {
   }
 
   if (state.audioContext.state === "suspended") {
-    state.audioContext.resume();
+    await state.audioContext.resume();
   }
 
+  els.soundNote.textContent = "Sound alerts are on.";
+  els.soundNote.classList.add("ready");
   return state.audioContext;
 }
 
-function playTone(frequency, startTime, duration, volume = 0.16) {
-  const audioContext = getAudioContext();
-
+function playTone(audioContext, frequency, startTime, duration, volume = 0.32) {
   if (!audioContext) {
     return;
   }
@@ -76,7 +79,7 @@ function playTone(frequency, startTime, duration, volume = 0.16) {
   const oscillator = audioContext.createOscillator();
   const gain = audioContext.createGain();
 
-  oscillator.type = "sine";
+  oscillator.type = "triangle";
   oscillator.frequency.setValueAtTime(frequency, startTime);
   gain.gain.setValueAtTime(0.0001, startTime);
   gain.gain.exponentialRampToValueAtTime(volume, startTime + 0.018);
@@ -88,8 +91,8 @@ function playTone(frequency, startTime, duration, volume = 0.16) {
   oscillator.stop(startTime + duration + 0.025);
 }
 
-function playAlert(type) {
-  const audioContext = getAudioContext();
+async function playAlert(type) {
+  const audioContext = await unlockAudio();
 
   if (!audioContext) {
     return;
@@ -98,21 +101,21 @@ function playAlert(type) {
   const now = audioContext.currentTime;
 
   if (type === "cycle") {
-    playTone(660, now, 0.12);
-    playTone(880, now + 0.16, 0.14);
-    playTone(1046, now + 0.34, 0.18);
+    playTone(audioContext, 660, now, 0.16);
+    playTone(audioContext, 880, now + 0.19, 0.16);
+    playTone(audioContext, 1046, now + 0.4, 0.24);
     return;
   }
 
   if (type === "complete") {
-    playTone(784, now, 0.14);
-    playTone(988, now + 0.18, 0.14);
-    playTone(1175, now + 0.36, 0.28);
+    playTone(audioContext, 784, now, 0.18);
+    playTone(audioContext, 988, now + 0.22, 0.18);
+    playTone(audioContext, 1175, now + 0.46, 0.36);
     return;
   }
 
-  playTone(880, now, 0.12);
-  playTone(587, now + 0.17, 0.16);
+  playTone(audioContext, 880, now, 0.18);
+  playTone(audioContext, 587, now + 0.22, 0.22);
 }
 
 function syncSettingsInputs() {
@@ -202,8 +205,8 @@ function tick() {
   updateDisplay();
 }
 
-function startTimer() {
-  getAudioContext();
+async function startTimer() {
+  await unlockAudio();
 
   if (state.finished) {
     resetTimer();
@@ -231,6 +234,7 @@ els.startPauseButton.addEventListener("click", () => {
 });
 
 els.resetButton.addEventListener("click", resetTimer);
+els.testSoundButton.addEventListener("click", () => playAlert("cycle"));
 
 document.querySelector("#settingsForm").addEventListener("submit", (event) => {
   event.preventDefault();
