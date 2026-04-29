@@ -1,0 +1,291 @@
+:root {
+  color-scheme: light;
+  --ink: #17211f;
+  --muted: #62706b;
+  --paper: #f7f5ef;
+  --panel: #ffffff;
+  --line: #d8ddd5;
+  --green: #167857;
+  --green-dark: #0f5d45;
+  --coral: #df6748;
+  --amber: #efb84c;
+  --blue: #376d9f;
+  --shadow: 0 24px 70px rgba(28, 44, 37, 0.16);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 18% 18%, rgba(239, 184, 76, 0.2), transparent 28rem),
+    linear-gradient(135deg, #f8f5ee 0%, #e8f0ea 52%, #eff4fb 100%);
+}
+
+button,
+input {
+  font: inherit;
+}
+
+.app-shell {
+  width: min(1120px, calc(100% - 32px));
+  min-height: 100vh;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 28px;
+  align-items: center;
+  padding: 36px 0;
+}
+
+.timer-panel {
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  padding: clamp(20px, 4vw, 44px);
+  backdrop-filter: blur(18px);
+}
+
+.brand-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  color: var(--green);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2.7rem, 7vw, 5.8rem);
+  line-height: 0.92;
+  letter-spacing: 0;
+}
+
+.status-pill {
+  min-width: 86px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 8px 12px;
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-weight: 700;
+  text-align: center;
+  background: var(--paper);
+}
+
+.phase-card {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: clamp(18px, 4vw, 34px);
+  background: linear-gradient(145deg, #10221c, #1f3c31);
+  color: white;
+}
+
+.phase-card.break {
+  background: linear-gradient(145deg, #2b355a, #376d9f);
+}
+
+.phase-card.finished {
+  background: linear-gradient(145deg, #523120, #df6748);
+}
+
+.phase-label {
+  margin: 0 0 8px;
+  color: rgba(255, 255, 255, 0.76);
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.time-display {
+  font-size: clamp(4.4rem, 17vw, 10.8rem);
+  line-height: 0.95;
+  font-weight: 800;
+  letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.cycle-copy {
+  margin: 12px 0 18px;
+  color: rgba(255, 255, 255, 0.78);
+  font-weight: 600;
+}
+
+.progress-track {
+  width: 100%;
+  height: 12px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.progress-fill {
+  width: 0%;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--amber);
+  transition: width 0.18s linear;
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+button {
+  min-height: 54px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.primary-button {
+  color: white;
+  background: var(--green);
+}
+
+.primary-button:hover {
+  background: var(--green-dark);
+}
+
+.ghost-button {
+  color: var(--ink);
+  background: transparent;
+  border-color: var(--line);
+}
+
+.ghost-button:hover {
+  background: var(--paper);
+}
+
+.settings {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.settings label {
+  display: grid;
+  gap: 7px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(247, 245, 239, 0.72);
+}
+
+.settings span {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.settings input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  border-bottom: 2px solid var(--line);
+  border-radius: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--ink);
+  font-size: 1.6rem;
+  font-weight: 800;
+}
+
+.settings input:focus {
+  border-color: var(--green);
+}
+
+.settings small {
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.workout-strip {
+  display: grid;
+  gap: 14px;
+}
+
+.workout-strip article {
+  min-height: 138px;
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 8px;
+  padding: 18px;
+  background: rgba(255, 255, 255, 0.58);
+  box-shadow: 0 14px 36px rgba(28, 44, 37, 0.08);
+}
+
+.workout-strip span {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  margin-bottom: 18px;
+  border-radius: 50%;
+  color: white;
+  background: var(--coral);
+  font-weight: 800;
+}
+
+.workout-strip strong {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 1.2rem;
+}
+
+.workout-strip p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+@media (max-width: 860px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .workout-strip {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 620px) {
+  .app-shell {
+    width: min(100% - 20px, 520px);
+    padding: 10px 0 24px;
+  }
+
+  .brand-row,
+  .controls,
+  .settings,
+  .workout-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .brand-row {
+    display: grid;
+  }
+
+  .status-pill {
+    justify-self: start;
+  }
+}

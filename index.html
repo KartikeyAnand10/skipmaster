@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="SkipMaster is an interval timer for skipping workouts with automatic break rounds."
+    />
+    <title>SkipMaster</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="timer-panel" aria-label="SkipMaster timer">
+        <div class="brand-row">
+          <div>
+            <p class="eyebrow">Interval skipping timer</p>
+            <h1>SkipMaster</h1>
+          </div>
+          <div class="status-pill" id="statusPill">Ready</div>
+        </div>
+
+        <div class="phase-card" id="phaseCard">
+          <p class="phase-label" id="phaseLabel">Skipping</p>
+          <div class="time-display" id="timeDisplay">01:00</div>
+          <p class="cycle-copy" id="cycleCopy">Cycle 1 of ∞</p>
+          <div class="progress-track" aria-hidden="true">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+        </div>
+
+        <div class="controls" aria-label="Timer controls">
+          <button class="primary-button" id="startPauseButton" type="button">
+            Start
+          </button>
+          <button class="ghost-button" id="resetButton" type="button">Reset</button>
+        </div>
+
+        <form class="settings" id="settingsForm">
+          <label>
+            <span>Skipping</span>
+            <input id="skipMinutes" type="number" min="0" max="99" value="1" />
+            <small>min</small>
+          </label>
+          <label>
+            <span>Break</span>
+            <input id="breakSeconds" type="number" min="5" max="900" value="30" />
+            <small>sec</small>
+          </label>
+          <label>
+            <span>Cycles</span>
+            <input id="cycles" type="number" min="0" max="99" value="0" />
+            <small>0 = ∞</small>
+          </label>
+        </form>
+      </section>
+
+      <section class="workout-strip" aria-label="Workout sequence">
+        <article>
+          <span>1</span>
+          <strong>Skip</strong>
+          <p>Work through the active round.</p>
+        </article>
+        <article>
+          <span>2</span>
+          <strong>Break</strong>
+          <p>Recover before the next set.</p>
+        </article>
+        <article>
+          <span>3</span>
+          <strong>Repeat</strong>
+          <p>The timer restarts automatically.</p>
+        </article>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
