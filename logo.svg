@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-labelledby="title desc">
+  <title id="title">SkipMaster logo</title>
+  <desc id="desc">A skipping rope loop around the letters S and M.</desc>
+  <defs>
+    <linearGradient id="badge" x1="22" x2="138" y1="22" y2="138" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#167857" />
+      <stop offset="0.55" stop-color="#1f3c31" />
+      <stop offset="1" stop-color="#df6748" />
+    </linearGradient>
+  </defs>
+  <rect width="160" height="160" rx="36" fill="#f7f5ef" />
+  <circle cx="80" cy="80" r="58" fill="url(#badge)" />
+  <path
+    d="M39 74c3-29 23-46 47-43 21 3 36 20 36 41 0 27-23 49-52 49-19 0-34-9-42-23"
+    fill="none"
+    stroke="#efb84c"
+    stroke-linecap="round"
+    stroke-width="9"
+  />
+  <path
+    d="M38 96c-6 8-9 17-9 27M122 80c8 7 13 17 14 31"
+    fill="none"
+    stroke="#17211f"
+    stroke-linecap="round"
+    stroke-width="8"
+  />
+  <text
+    x="80"
+    y="92"
+    fill="#ffffff"
+    font-family="Inter, Arial, sans-serif"
+    font-size="44"
+    font-weight="800"
+    letter-spacing="0"
+    text-anchor="middle"
+  >SM</text>
+</svg>

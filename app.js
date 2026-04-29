@@ -6,6 +6,7 @@ const state = {
   remaining: 60,
   phaseTotal: 60,
   intervalId: null,
+  audioContext: null,
 };
 
 const els = {
@@ -45,6 +46,73 @@ function formatTime(totalSeconds) {
   const minutes = Math.floor(totalSeconds / 60).toString().padStart(2, "0");
   const seconds = Math.floor(totalSeconds % 60).toString().padStart(2, "0");
   return `${minutes}:${seconds}`;
+}
+
+function getAudioContext() {
+  const AudioContextConstructor = window.AudioContext || window.webkitAudioContext;
+
+  if (!AudioContextConstructor) {
+    return null;
+  }
+
+  if (!state.audioContext) {
+    state.audioContext = new AudioContextConstructor();
+  }
+
+  if (state.audioContext.state === "suspended") {
+    state.audioContext.resume();
+  }
+
+  return state.audioContext;
+}
+
+function playTone(frequency, startTime, duration, volume = 0.16) {
+  const audioContext = getAudioContext();
+
+  if (!audioContext) {
+    return;
+  }
+
+  const oscillator = audioContext.createOscillator();
+  const gain = audioContext.createGain();
+
+  oscillator.type = "sine";
+  oscillator.frequency.setValueAtTime(frequency, startTime);
+  gain.gain.setValueAtTime(0.0001, startTime);
+  gain.gain.exponentialRampToValueAtTime(volume, startTime + 0.018);
+  gain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
+
+  oscillator.connect(gain);
+  gain.connect(audioContext.destination);
+  oscillator.start(startTime);
+  oscillator.stop(startTime + duration + 0.025);
+}
+
+function playAlert(type) {
+  const audioContext = getAudioContext();
+
+  if (!audioContext) {
+    return;
+  }
+
+  const now = audioContext.currentTime;
+
+  if (type === "cycle") {
+    playTone(660, now, 0.12);
+    playTone(880, now + 0.16, 0.14);
+    playTone(1046, now + 0.34, 0.18);
+    return;
+  }
+
+  if (type === "complete") {
+    playTone(784, now, 0.14);
+    playTone(988, now + 0.18, 0.14);
+    playTone(1175, now + 0.36, 0.28);
+    return;
+  }
+
+  playTone(880, now, 0.12);
+  playTone(587, now + 0.17, 0.16);
 }
 
 function syncSettingsInputs() {
@@ -100,6 +168,7 @@ function completeWorkout() {
   state.finished = true;
   state.remaining = 0;
   updateDisplay();
+  playAlert("complete");
 }
 
 function advancePhase() {
@@ -107,6 +176,7 @@ function advancePhase() {
 
   if (state.phase === "skip") {
     setPhase("break");
+    playAlert("phase");
     return;
   }
 
@@ -118,6 +188,7 @@ function advancePhase() {
   }
 
   setPhase("skip");
+  playAlert("cycle");
 }
 
 function tick() {
@@ -132,6 +203,8 @@ function tick() {
 }
 
 function startTimer() {
+  getAudioContext();
+
   if (state.finished) {
     resetTimer();
   }

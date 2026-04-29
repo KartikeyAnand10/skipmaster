@@ -8,6 +8,8 @@ SkipMaster is a simple static interval timer for skipping workouts. It runs a sk
 - Configurable skipping duration
 - Configurable break duration
 - Optional cycle limit, with `0` meaning unlimited rounds
+- Alert sounds when a timer ends and when a cycle completes
+- SkipMaster logo and favicon
 - Vercel-ready static files with no build step
 
 ## Deploy to Vercel

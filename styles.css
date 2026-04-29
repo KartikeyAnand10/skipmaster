@@ -60,6 +60,20 @@ input {
   margin-bottom: 28px;
 }
 
+.brand-lockup {
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 3vw, 22px);
+  min-width: 0;
+}
+
+.brand-logo {
+  width: clamp(64px, 10vw, 104px);
+  height: clamp(64px, 10vw, 104px);
+  flex: 0 0 auto;
+  filter: drop-shadow(0 14px 22px rgba(22, 120, 87, 0.2));
+}
+
 .eyebrow {
   margin: 0 0 8px;
   color: var(--green);
@@ -283,6 +297,10 @@ button {
 
   .brand-row {
     display: grid;
+  }
+
+  .brand-lockup {
+    align-items: flex-start;
   }
 
   .status-pill {
